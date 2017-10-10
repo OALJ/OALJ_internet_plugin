@@ -22,7 +22,7 @@ def udpget():
 
 filename=input('please enter the name of file: ')
 pro_num=input('please enter the problem number: ')
-textfile=open('./%s'%filename,'r')
+textfile=open('%s'%filename,'r')
 i=0
 while True:
     line=textfile.readline()

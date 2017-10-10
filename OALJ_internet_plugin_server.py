@@ -21,10 +21,12 @@ def solve(sock,addr):
     time.sleep(0.3)
     linenumber=sock.recv(1024).decode('utf-8')
     sock.send(addr[0].encode())
+    temp=filename.split('/')
+    filename=temp[len(temp)-1]
     print("filename:",filename)
     print('problem number:',pro_num)
     print('linenumber:',linenumber)
-    textfile=open('./%s'%filename,'w')
+    textfile=open('%s'%filename,'w')
     i=1
     l=int(linenumber)
     while i<l-1 :
@@ -33,11 +35,13 @@ def solve(sock,addr):
         textfile.write(temp)
     textfile.close()
     print('successfully receive from',addr[0])
-    os.system('oalj -q > temp.txt')
+    os.system('mv %s /media/disk1/judge/data/%s'%(filename,pro_num))
+    os.chdir('/media/disk1/judge/data/%s'%pro_num)
+    os.system('oalj -q -i %s> temp.txt'%filename)
     resfile=open('./temp.txt','r')
     data=resfile.read()
     sock.send(data.encode())
-    #while True:
+    os.system('rm %s'%filename)
     send(addr[0],data)
     quit()
 
